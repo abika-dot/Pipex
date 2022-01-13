@@ -6,25 +6,25 @@
 /*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:52:45 by ozahir            #+#    #+#             */
-/*   Updated: 2022/01/12 23:33:57 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/01/13 15:12:45 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	child_exec(char	*path, char *cmd,char	**envp, char	*file, int pi)
+void	child_exec(char	*path, char *cmd,char	**envp, char	*file, int id)
 {
 	char	**arv;
 	int	fd;
 
 	fd = open(file, O_RDONLY);
-	if (fd = -1)
+	if (fd == -1)
 	{
 		perror("input not found");
-		exit(-1)
+		exit(-1);
 	}
 	dup2(0,fd);
-	dup(1,pi)
+	dup2(1,id);
 	arv = ft_split(cmd, ' ');
 	if (!arv)
 	{
@@ -35,12 +35,12 @@ void	child_exec(char	*path, char *cmd,char	**envp, char	*file, int pi)
 	
 }
 
-void	parent_exec(char	*path, char	*cmd, char	**envp,char	*file,int pi)
+void	parent_exec(char	*path, char	*cmd, char	**envp,char	*file,int id)
 {
 	char	**arv;
 	int fd;
 
-	fd = open(file, OCREAT | O_RDWR);
+	fd = open(file, O_CREAT | O_RDWR);
 	if (fd < 0)
 	{
 		perror("couldn't create the file");
@@ -52,12 +52,12 @@ void	parent_exec(char	*path, char	*cmd, char	**envp,char	*file,int pi)
 		perror("parent Buffer fail");
 		exit(-1);
 	}
-	dup2(0,pi);
+	dup2(0,id);
 	dup2(1,fd);
 	if (execve(path, arv, envp) == -1)
 		perror("parent execution fail");
 }
-int pipex(char	**paths,char	**av,	char	**envp)
+void pipex(char	**paths,char	**av,	char	**envp)
 {
 	int id;
 	int filde[2];
