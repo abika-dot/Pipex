@@ -19,6 +19,6 @@ int main(int ac, char **av,char	**envp)
 
 	if (ac != 5)
 		return(perror("Usage: Pipex input1 cmd1 cmd2 output"), -1);
-	paths = get_paths(envp,av);
+	paths = get_paths(av,envp);
 	pipex(paths, av,envp);
 }

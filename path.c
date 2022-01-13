@@ -13,7 +13,7 @@
 
 #include "pipex.h"
 
-char	*get_env(char	**envp,char	*cmd)
+char	*get_env(char	**envp,char	**cmd)
 {
 	int		i;
 	char	**envi;
@@ -26,10 +26,10 @@ char	*get_env(char	**envp,char	*cmd)
 				break ;
 		i++;
 	}
-	envi = ft_split(envp[i] + 5 , ';');
+	envi = ft_split(envp[i] + 5 , ':');
 	if (!envi)
 		return (NULL);
-	env  = check_path(cmd,envi);
+	env  = check_path(cmd[0],envi);
 	do_free(envi);
 	return (env);
 }
@@ -37,25 +37,32 @@ char	*get_env(char	**envp,char	*cmd)
 char	**get_paths(char **av, char **envp)
 {
 	char	**paths;
+	char	**cmd;
+	char	**cmd2;
 
 	paths = malloc(3 * sizeof(char	*));
 	if (!paths)
 		return NULL;
-
-	paths[0] = get_env(envp, av[2]);
+	cmd = ft_split(av[2], ' ');
+		printf("1%s\n", cmd[0]);
+	paths[0] = get_env(envp, cmd);
+	do_free(cmd);
 	if (paths[0] == NULL)
 	{
 		do_free(paths);
 		perror("cmd1 not found");
 		exit(-1);
 	}
-	paths[1] = get_env(envp,av[3]);
+	cmd = ft_split(av[3], ' ');
+	printf("2%s\n", cmd[0]);
+	paths[1] = get_env(envp,cmd);
 	if (paths[1] == NULL)
 	{
 		do_free(paths);
 		perror("cmd2 not found");
 		exit(-1);
 	}
+	do_free(cmd);
 	paths[2] = NULL;
 	return(paths);
 }

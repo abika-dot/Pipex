@@ -21,10 +21,10 @@
 
 void	do_free(char	**to_free);
 char    *plus_strjoin(char const *s1, char const *s2, int c);
-char	*get_env(char	**envp,char	*cmd);
+char	*get_env(char	**envp,char	**cmd);
 char	**get_paths(char **av, char **envp);
 char	*check_path(char	*cmd,	char	**envirement);
-void	child_exec(char	*path, char *cmd,char	**envp, char	*file, int id);
+void	child_exec(char	*path, char *cmd,char	**envp, char	*file, int *id);
 void	parent_exec(char	*path, char	*cmd, char	**envp,char	*file,int id);
 void pipex(char	**paths,char	**av,	char	**envp);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
