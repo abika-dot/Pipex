@@ -5,104 +5,93 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/09 17:52:45 by ozahir            #+#    #+#             */
-/*   Updated: 2022/01/13 15:12:45 by ozahir           ###   ########.fr       */
+/*   Created: 2022/02/17 22:24:38 by ozahir            #+#    #+#             */
+/*   Updated: 2022/02/17 22:49:34 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	child_exec(char	*path, char *cmd, char	**envp, char	*file, int *id)
+void	ft_putstr_fd(char *s, int fd)
 {
-	char	**arv;
-	int	fd;
-
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-	{
-		perror("input not found");
-		exit(-1);
-	}
-	printf("1 child %s \n", path);
-	printf("2 child  %s \n", cmd);
-
-	dup2(fd, 0);
-	close(fd);
-	close(id[0]);
-	dup2(id[1], 1);
-	arv = ft_split(cmd, ' ');
-	if (!arv)
-	{
-		perror("child buffer fail");
-	}
-	if (execve(path,arv,envp) == -1)
-		perror("child execution fail");
-	
-}
-
-void	parent_exec(char	*path, char	*cmd, char	**envp,char	*file,int id)
-{
-	char	**arv;
-	int fd;
-	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	printf("parent %s \n", file);
-	if (fd < 0)
-	{
-		perror("couldn't create the file");
-		exit(-1);
-	}
-	arv = ft_split(cmd, ' ');
-	if (!arv)
-	{
-		perror("parent Buffer fail");
-		exit(-1);
-	}
-	printf("1 parent %s \n", path);
-	printf("2 parent %s \n", arv[0]);
-	dup2(fd ,1);
-	close(id);
-	close(fd);
-	if (execve(path, arv, envp) == -1)
-		perror("parent execution fail");
-}
-void pipex(char	**paths,char	**av,	char	**envp)
-{
-	int id;
-	int id2;
-	int filde[2];
 	int	i;
 
-	if (pipe(filde) == -1)
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
 	{
-		perror("pipe not created");
+		write(fd, &s[i], 1);
+		i++;
 	}
-	id = fork();
-	if (id < 0)
-	{
-		perror("coudnt fork the process");
-		exit(-1);
-	}
-	if (id == 0)
-	{
-		// close(filde[0]);
-		child_exec(paths[0],av[2],envp, av[1],filde);
-	}
-	close(filde[1]);
-	dup2(filde[0], 0);
-	// if (pipe(filde) == -1)
-	// 	perror("pipe 2 not created");
-	id = fork();
-	if (id == 0)
-	{
-		close(filde[1]);
-		parent_exec(paths[1],av[3],envp, av[4], filde[0]);
-	}
-	close(filde[0]);
-	close(filde[1]);
-	i = 3;
-	while (--i)
-		waitpid(id, NULL, 0);
-	// waitpid(id2,NULL,0);
+}
+int    exec_that(int *pipes,int in, int out, char *cmd,char  **envp)
+{
+    char    **command;
+    char    *path;
+    command = ft_split(cmd,' ');
+    if (!command)
+        return 1;
+    path = get_path(command[0], envp);
+    if (!path || !command)
+        return 2;
+    dup2(in, 1);
+    dup2(out,0);
+    close_unused_pipes(pipes,in,out);
+    execve(path,command,envp); 
+}
+void case_hand(int exi, char *cmd)
+{
+    if (exi == 1)
+    {
+        ft_putstr_fd(cmd,2);
+        ft_putstr_fd(": error parsing the command \n",2);
+        exit(1);
+    }
+    else if (exi == 2)
+    {
+        ft_putstr_fd(cmd, 2);
+        ft_putstr_fd(": bin not found \n");
+        exit(1);        
+    }    
+    else if (exi = 3)
+    {
+        
+    }
+    
+}
+void pipex(int argc, char   **argv,char **envp)
+{
+    int *pipes;
+    int exi;
+    int id;
+    int i;
+    int j;
+    
+    exi = 0;
+    i = 2;
+    j = 0;
+    pipes = get_pipes(argv[1], argv[argc - 1], argc - 4);
+    if (!pipes)
+        exi = 3;
+    while (i < (argc -1))
+    {
 
+        id = fork();
+        if (id == -1)
+        exit(1);
+        if (id == 0)
+            exi = exec_that(pipes, pipes[j+ 1], pipes[j], argv[i], envp);
+        case_hand(exi, argv[i]);
+        j += 2;
+        i++;
+    }
+    wait(NULL);
+}
 
+int main(int argc , char **argv,char	**envp)
+{
+    if (argc >= 5)
+        pipex(argc, argv,envp);
+    else 
+        perror("Usage: ./pipex  file_in cmd cmd1 cmd2 cmdn file_out");
 }
