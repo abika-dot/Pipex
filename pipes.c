@@ -6,7 +6,7 @@
 /*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 02:13:41 by ozahir            #+#    #+#             */
-/*   Updated: 2022/02/21 02:14:05 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/02/21 20:59:33 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int *arrange_pipes(int in,int out,int *pipes, int n_pipes)
         k = pipe(pip[i]);
         if (k != 0)
         perror("piping error");
+
+		printf("readend %d -- write end %d \n",pip[i][0],pip[i][1]);
         pipes[j] = pip[i][1];
         pipes[j + 1] = pip[i][0];
         j += 2;

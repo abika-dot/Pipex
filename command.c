@@ -6,7 +6,7 @@
 /*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 02:12:28 by ozahir            #+#    #+#             */
-/*   Updated: 2022/02/21 02:13:16 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/02/21 21:01:26 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void  t_free(char ***t_buff)
 
 void	exec_that(t_data *data,int in, int out, int index)
 {
-    dup2(in, 1);
-    dup2(out,0);
+    dup2(out, 1);
+    dup2(in,0);
     close_unused_pipes(data->pipes,in,out);
     execve(data->paths[index],data->commands[index],data->env);
 }

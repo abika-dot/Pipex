@@ -6,7 +6,7 @@
 /*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 02:14:18 by ozahir            #+#    #+#             */
-/*   Updated: 2022/02/21 02:14:31 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/02/21 21:05:02 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,16 @@ void pipex(t_data *data,int argc,char **argv)
         case_err(1, "Error creating pipes");
     while(data->paths[i])
     {
-		if (data->paths[i] == NULL)
-			exit(1);
         id = fork();
         if (id == -1)
         exit(1);
         if (id == 0)
-			exec_that(data,data->pipes[j + 1],data->pipes[j],i);
+			exec_that(data,data->pipes[j],data->pipes[j + 1],i);
+		printf("%d %d\n" , data->pipes[j],data->pipes[j + 1]);
         j += 2;
 		i++;
     }
     wait(NULL);
-	t_free(data->commands);
-	d_free(data->paths);
 }
 int  main(int  argc, char	**argv,char	**envp)
 {
@@ -45,6 +42,7 @@ int  main(int  argc, char	**argv,char	**envp)
 
 	if (argc	>= 5)
 	{
+		exit(1);
 		data = malloc(sizeof(t_data));
 		if (!data)
 			case_err(1, "error data");
