@@ -5,13 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/17 22:19:53 by ozahir            #+#    #+#             */
-/*   Updated: 2022/02/17 22:49:40 by ozahir           ###   ########.fr       */
+/*   Created: 2022/02/21 02:11:08 by ozahir            #+#    #+#             */
+/*   Updated: 2022/02/21 02:12:14 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+char    **bin_path(char  **envp)
+{
+    int		i;
+	char	**envi;
+
+	i = 0;
+	while(envp[i])
+	{
+		if(ft_strncmp(envp[i], "PATH=",5) == 0)
+				break ;
+		i++;
+	}
+	envi = ft_split(envp[i] + 5 , ':');
+	if (!envi)
+		return (NULL);
+	return (envi);
+}
 char    *path_join(char const *s1, char const *s2, int c)
 {
     char    *ss;
@@ -38,19 +55,13 @@ char    *path_join(char const *s1, char const *s2, int c)
     ss[ln1 + ln2] = 0;
     return (ss);
 }
-char    *get_path(char  *cmd, char **envp)
-{
-    char    **path_key;
-    char    *path;
 
-    int i;
-    i = 0;
-    path_key = bin_path(envp);
-    if (!path_key)
-        {
-            perror("coudn't parse the envp");
-            exit(1);
-        }
+char    *get_path(char  *cmd, char **path_key)
+{
+    char    *path;
+	int i;
+
+	i = 0;
     while (path_key[i])
     {
         path = path_join(path_key[i],cmd, '/');
@@ -61,25 +72,34 @@ char    *get_path(char  *cmd, char **envp)
         free(path);
         i++;
     }
-    perror("command not found");
     return NULL;
 }
 
-char    **bin_path(char  **envp)
+char	**path_checker(char	***commands,char	**envp)
 {
-    int		i;
-	char	**envi;
+	int  i;
+	char	**paths;
+	char	**c_paths;
 
 	i = 0;
-	while(envp[i])
+	paths = bin_path(envp);
+	if (!paths)
+		return NULL;
+	while(commands[i])
+		i++;
+	c_paths = malloc(i * sizeof(char	*) + 1);
+	if (!c_paths)
+		return NULL;
+	c_paths[i] = NULL;
+	i = 0;
+	while(commands[i])
 	{
-		if(ft_strncmp(envp[i], "PATH=",5) == 0)
-				break ;
+		c_paths[i] = get_path(commands[i][0], paths);
+		printf("%s\n", c_paths[i]);
+		if (!c_paths[i])
+			return(d_free(c_paths), d_free(paths) ,case_err(2 , commands[i][0]),NULL);
 		i++;
 	}
-	envi = ft_split(envp[i] + 5 , ':');
-	if (!envi)
-		return (NULL);
-	return (envi);
+	d_free(paths);
+	return (c_paths);
 }
-

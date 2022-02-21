@@ -6,89 +6,114 @@
 /*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 03:06:00 by ozahir            #+#    #+#             */
-/*   Updated: 2022/02/19 20:16:43 by ozahir           ###   ########.fr       */
+/*   Updated: 2021/11/20 16:38:21 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
 
-static int	count_words(const char *s, char c)
+char	**freed(char **spl)
 {
-	size_t	i;
-	size_t	compt;
+	int	i;
 
 	i = 0;
-	compt = 0;
-	while (s[i])
+	while (spl[i])
 	{
-		while (s[i] == c)
-		{
-			i++;
-		}
-		if (s[i] != c && s[i])
-		{
-			compt++;
-		}
-		while (s[i] != c && s[i])
-		{
-			i++;
-		}
-	}
-	return (compt);
-}
-
-static char	*this(const char *s, char c)
-{
-	size_t	i;
-	char	*tab;
-
-	i = 0;
-	while (s[i] && s[i] != c)
-	{
+		free(spl[i]);
 		i++;
 	}
-	tab = (char *)malloc(sizeof(char) * (i + 1));
-	if (!tab)
-	{
-		return (NULL);
-	}
-	ft_strlcpy (tab, s, i + 1);
-	return (tab);
-}
-
-char	**free_t(unsigned int i, char **tab)
-{
-	while (i > 0)
-	{
-		free(tab[i--]);
-	}
-	free(tab);
+	free(spl);
 	return (NULL);
 }
 
-char	**ft_split(const char *s, char c)
+int	rows(const char *s, char c)
 {
-	size_t	i;
-	size_t	length;
-	char	**tab;
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (s[i])
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i] && s[i] != c)
+			j++;
+		while (s[i] && s[i] != c)
+			i++;
+	}
+	j++;
+	return (j);
+}
+
+char	**alocation(char **spl, const char *s, char c)
+{
+	int	i;
+	int	j;
+	int	a;
+
+	a = 0;
+	i = 0;
+	j = 0;
+	while (s[i] != '\0')
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i] == '\0')
+			break ;
+		while (s[i + j] && s[i + j] != c)
+			j++;
+		spl[a] = malloc(j * sizeof(char) + 1);
+		if (!spl[a])
+			return (freed(spl));
+		i = i + j;
+		j = 0;
+		a++;
+	}
+	spl[a] = NULL;
+	return (spl);
+}
+
+char	**endl(char **spl, const char *s, char c)
+{
+	int	i;
+	int	j;
+	int	a;
+
+	a = 0;
+	i = 0;
+	j = 0;
+	while (s[i] != '\0' )
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i] == '\0')
+			break ;
+		while (s[i + j] && s[j + i] != c)
+			j++;
+		ft_strlcpy(spl[a], s + i, j + 1);
+		i = i + j;
+		j = 0;
+		a++;
+	}
+	return (spl);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	int		a;
+	char	**spl;
 
 	if (!s)
 		return (NULL);
-	length = count_words(s, c);
-	tab = (char **)malloc(sizeof(char *) * (length + 1));
-	if (!tab)
+	a = rows(s, c);
+	if (a == 0)
 		return (NULL);
-	i = -1;
-	while (++i < length)
-	{
-		while (s[0] == c)
-		{
-			s++;
-		}
-		tab[i] = this(s, c);
-		if (tab[i] == NULL)
-			return (NULL);
-		s = s + ft_strlen(tab[i]);
-	}
-	tab[i] = 0;
-	return (tab);
+	spl = malloc(a * sizeof(char *));
+	if (!spl)
+		return (NULL);
+	spl = alocation(spl, s, c);
+	if (spl == NULL)
+		return (NULL);
+	spl = endl(spl, s, c);
+	return (spl);
 }

@@ -5,13 +5,34 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/17 22:04:02 by ozahir            #+#    #+#             */
-/*   Updated: 2022/02/19 20:16:02 by ozahir           ###   ########.fr       */
+/*   Created: 2022/02/21 02:06:35 by ozahir            #+#    #+#             */
+/*   Updated: 2022/02/21 02:11:02 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
 
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while ((s1[i] || s2[i]) && n > i)
+	{
+		if ((unsigned char)s1[i] != (unsigned char)s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	char	*ddst;
@@ -31,31 +52,17 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	}
 	return ((void *)(dst));
 }
-
-size_t	ft_strlen(const char *s)
+void	d_free(char	**l_str)
 {
-	size_t	i;
-
+	int i;
 	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while ((s1[i] || s2[i]) && n > i)
+	while(l_str[i])
 	{
-		if ((unsigned char)s1[i] != (unsigned char)s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		free(l_str[i]);
 		i++;
 	}
-	return (0);
+	free(l_str);
 }
-
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	count;
