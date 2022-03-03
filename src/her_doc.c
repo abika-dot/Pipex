@@ -6,7 +6,7 @@
 /*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:53:23 by ozahir            #+#    #+#             */
-/*   Updated: 2022/03/04 00:10:16 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/03/04 00:49:06 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -31,7 +31,7 @@ int	write_to_tmp(t_data *data)
 
 	if (!data)
 		return (0);
-	file = open("tmp.txt", O_WRONLY | O_CREAT,0664);
+	file = open("tmp", O_WRONLY | O_CREAT,0664);
 	temp = data;
 	while (data->next != NULL)
 	{
@@ -39,7 +39,8 @@ int	write_to_tmp(t_data *data)
 		data = data->next;
 	}
 	free_list(temp);
-	printf()
+	close(file);
+	file = open("tmp", O_RDONLY , 0664);
 	return file;
 }
 
