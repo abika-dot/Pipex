@@ -3,20 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 03:06:00 by ozahir            #+#    #+#             */
-/*   Updated: 2021/11/20 16:38:21 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/02/28 21:35:44 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "pipex.h"
 
-char	**freed(char **spl)
+static	char	**freed(char **spl, int index)
 {
 	int	i;
 
 	i = 0;
-	while (spl[i])
+	if (index <= 0)
+	{
+		free(spl);
+		return (NULL);
+	}
+	while (i < index)
 	{
 		free(spl[i]);
 		i++;
@@ -25,7 +31,7 @@ char	**freed(char **spl)
 	return (NULL);
 }
 
-int	rows(const char *s, char c)
+static	int	rows(const char *s, char c)
 {
 	int	i;
 	int	j;
@@ -45,7 +51,7 @@ int	rows(const char *s, char c)
 	return (j);
 }
 
-char	**alocation(char **spl, const char *s, char c)
+static	char	**alocation(char **spl, const char *s, char c)
 {
 	int	i;
 	int	j;
@@ -64,7 +70,7 @@ char	**alocation(char **spl, const char *s, char c)
 			j++;
 		spl[a] = malloc(j * sizeof(char) + 1);
 		if (!spl[a])
-			return (freed(spl));
+			return (freed(spl, a));
 		i = i + j;
 		j = 0;
 		a++;
@@ -73,7 +79,7 @@ char	**alocation(char **spl, const char *s, char c)
 	return (spl);
 }
 
-char	**endl(char **spl, const char *s, char c)
+static	char	**endl(char **spl, const char *s, char c)
 {
 	int	i;
 	int	j;
