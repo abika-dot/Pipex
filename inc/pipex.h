@@ -6,7 +6,7 @@
 /*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:54:57 by ozahir            #+#    #+#             */
-/*   Updated: 2022/03/04 00:17:56 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/03/06 16:28:26 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-# define BUFFER_SIZE 20
+#define BUFFER_SIZE 42
+
 typedef	struct	s_data
 {
 	char	*text;
@@ -33,4 +34,5 @@ char	*newline(char *left);
 int		nl_sig(char *str);
 char	*get_next_line(int fd);
 char	*rest(char	*rest);
+int here_doc(char	*delimiter, int fd);
 #endif

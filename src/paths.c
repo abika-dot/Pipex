@@ -6,7 +6,7 @@
 /*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 17:19:37 by ozahir            #+#    #+#             */
-/*   Updated: 2022/02/28 16:02:55 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/03/06 19:09:28 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,34 @@ char	**get_bins(char	**envp)
 
 char	*get_path(char	*cmd, char	**envp)
 {
-	char	*paths;
+	char	*path;
+	char	**d_binaries;
 
-	paths = bin_path(cmd, get_bins(envp));
+	d_binaries = get_bins(envp);
+	if (!d_binaries)
+		return (ft_putstr_fd("envp, doesnt exist or incomplete\n",2), NULL);
+	path = binary_path(cmd, d_binaries);
+	if (!path)
+	{
+		d_free(d_binaries);
+		return(ft_putstr_fd("binary file isn't found \n", 2), NULL);
+	}
+	d_free(d_binaries);
+	d_binaries = NULL;
 	return (paths);
 }
 
-char	*bin_path(char	*cmd, char	**paths)
+char	*binary_path(char	*cmd, char	**paths)
 {
 	int		i;
 	char	*path;
 
-	if (!paths)
-		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
 		path = path_join(paths[i], cmd, '/');
 		if (!path)
-			return (NULL);
+			return (ft_putstr_fd("something's wrong i can feel it\n", 2)NULL);
 		if (access(path, X_OK) == 0)
 			return (path);
 		free(path);

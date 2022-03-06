@@ -6,12 +6,12 @@
 /*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:53:23 by ozahir            #+#    #+#             */
-/*   Updated: 2022/03/04 00:49:06 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/03/06 17:45:13 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
 
-void free_list(t_data *data)
+static void free_list(t_data *data)
 {
 	t_data	*tmp;
 
@@ -24,31 +24,30 @@ void free_list(t_data *data)
 		data = tmp;
 	}
 }
-int	write_to_tmp(t_data *data)
+static void	write_to_tmp(t_data *data)
 {
 	t_data	*temp;
 	int file;
 
 	if (!data)
 		return (0);
-	file = open("tmp", O_WRONLY | O_CREAT,0664);
+	file = open(".tmp", O_WRONLY | O_CREAT,0664);
+	if(!file)
+		return (ft_putstr_fd("coudn't ctreat tmp file\n",2), );
 	temp = data;
 	while (data->next != NULL)
 	{
-		ft_putstr_fd(data->text, file);
+		ft_putstr_fd(data->text,file);
 		data = data->next;
 	}
 	free_list(temp);
 	close(file);
-	file = open("tmp", O_RDONLY , 0664);
-	return file;
 }
 
 int	here_doc(char	*delimiter)
 {	
 	t_data	*temp;
 	t_data	*lines;
-	int fd;
 
 	lines = malloc(sizeof(t_data));
 	if (!lines)
@@ -68,6 +67,6 @@ int	here_doc(char	*delimiter)
 			return (free_list(temp), 0);
 	}
 	lines->next = NULL;
-	fd = write_to_tmp(temp);
-	return (fd);
+	write_to_tmp(temp);
+	return (open(".tmp", O_RDONLY, 0664));
 }
