@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   paths.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 17:19:37 by ozahir            #+#    #+#             */
-/*   Updated: 2022/03/06 19:09:28 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/03/08 20:31:13 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../inc/pipex.h"
 
 char	**get_bins(char	**envp)
 {
@@ -42,7 +42,7 @@ char	*get_path(char	*cmd, char	**envp)
 	}
 	d_free(d_binaries);
 	d_binaries = NULL;
-	return (paths);
+	return (path);
 }
 
 char	*binary_path(char	*cmd, char	**paths)
@@ -55,7 +55,7 @@ char	*binary_path(char	*cmd, char	**paths)
 	{
 		path = path_join(paths[i], cmd, '/');
 		if (!path)
-			return (ft_putstr_fd("something's wrong i can feel it\n", 2)NULL);
+			return (ft_putstr_fd("something's wrong i can feel it\n", 2), NULL);
 		if (access(path, X_OK) == 0)
 			return (path);
 		free(path);

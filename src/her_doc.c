@@ -3,13 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   her_doc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:53:23 by ozahir            #+#    #+#             */
-/*   Updated: 2022/03/06 17:45:13 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/03/08 20:13:05 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "pipex.h"
+
+
+#include "../inc/pipex.h"
 
 static void free_list(t_data *data)
 {
@@ -30,11 +32,14 @@ static void	write_to_tmp(t_data *data)
 	int file;
 
 	if (!data)
-		return (0);
+		return ;
 	file = open(".tmp", O_WRONLY | O_CREAT,0664);
 	if(!file)
-		return (ft_putstr_fd("coudn't ctreat tmp file\n",2), );
-	temp = data;
+		{
+            ft_putstr_fd("coudn't ctreat tmp file\n",2);
+            return ;
+        }
+        temp = data;
 	while (data->next != NULL)
 	{
 		ft_putstr_fd(data->text,file);

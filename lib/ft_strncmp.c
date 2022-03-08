@@ -3,13 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:15:26 by ozahir            #+#    #+#             */
-/*   Updated: 2022/03/03 22:44:00 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/03/08 20:32:01 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "pipex.h"
+
+
+#include "../inc/pipex.h"
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t	count;
+	size_t	i;
+
+	count = 0;
+	i = 0;
+	while (src[count])
+		count++;
+	if (dstsize == 0)
+		return (count);
+	while (src[i] && dstsize != 0 && i < dstsize - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (count);
+}
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

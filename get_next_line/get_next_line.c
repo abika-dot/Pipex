@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 09:55:13 by ozahir            #+#    #+#             */
-/*   Updated: 2022/03/03 22:50:16 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/03/08 20:06:29 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../inc/pipex.h"
 
 int	nl_sig(char *str)
 {

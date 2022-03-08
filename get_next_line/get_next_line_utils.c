@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 09:55:04 by ozahir            #+#    #+#             */
-/*   Updated: 2022/03/03 22:50:31 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/03/08 20:06:25 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../inc/pipex.h"
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {

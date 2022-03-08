@@ -3,13 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 19:26:43 by ozahir            #+#    #+#             */
-/*   Updated: 2022/03/03 22:45:36 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/03/08 20:32:38 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "pipex.h"
+
+
+#include "../inc/pipex.h"
+
+
 
 void	ft_putstr_fd(char *s, int fd)
 {

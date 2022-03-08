@@ -6,13 +6,13 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 03:06:00 by ozahir            #+#    #+#             */
-/*   Updated: 2022/02/28 21:35:44 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/03/08 20:19:02 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../inc/pipex.h"
 
-static	char	**freed(char **spl, int index)
+static char	**freed(char **spl, int index)
 {
 	int	i;
 
