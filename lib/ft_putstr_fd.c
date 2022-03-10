@@ -6,14 +6,11 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 19:26:43 by ozahir            #+#    #+#             */
-/*   Updated: 2022/03/08 20:32:38 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/03/10 21:29:27 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../inc/pipex.h"
-
-
 
 void	ft_putstr_fd(char *s, int fd)
 {
