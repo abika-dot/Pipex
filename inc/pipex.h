@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:54:57 by ozahir            #+#    #+#             */
-/*   Updated: 2022/03/10 21:28:44 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/03/17 19:04:44 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_data
 {
 	char			*text;
 	struct s_data	*next;
-}t_data;
+}	t_data;
 
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_putstr_fd(char *s, int fd);
@@ -45,4 +45,8 @@ void	*ft_memcpy(void *dst, const void *src, size_t n);
 int		here_doc(char	*delimiter);
 char	*path_join(char const *s1, char const *s2, int c);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+int		check_args(int argc, char **argv, char **envp);
+void	check_fd(int *fd);
+void	pipex(int *pipes, int argc, char **argv, char **envp);
+int		*step_one(int argc, char **argv);
 #endif

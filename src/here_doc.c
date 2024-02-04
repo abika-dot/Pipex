@@ -60,7 +60,7 @@ int	here_doc(char	*deli)
 	temp = lines;
 	while (1)
 	{
-		write(1, "heredoc>", 8);
+		write(1, "here_doc>", 9);
 		lines->text = get_next_line(0);
 		if (lines->text == NULL
 			|| (ft_strlen(lines->text) - 1 == ft_strlen(deli)

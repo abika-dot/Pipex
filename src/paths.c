@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 17:19:37 by ozahir            #+#    #+#             */
-/*   Updated: 2022/03/10 21:37:59 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/03/17 18:31:51 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,19 @@ char	*get_path(char	*cmd, char	**envp)
 
 	d_binaries = get_bins(envp);
 	if (!d_binaries)
-		return (ft_putstr_fd("envp, doesn't exist or incomplete\n", 2), NULL);
+		return (NULL);
 	path = binary_path(cmd, d_binaries);
 	if (!path)
 	{
 		d_free(d_binaries);
-		return (ft_putstr_fd("binary file isn't found \n", 2), NULL);
+		return (NULL);
 	}
 	d_free(d_binaries);
 	d_binaries = NULL;
 	return (path);
 }
 
-char	*binary_path(char	*cmd, char	**paths)
+char	*binary_path(char *cmd, char **paths)
 {
 	int		i;
 	char	*path;
@@ -55,7 +55,7 @@ char	*binary_path(char	*cmd, char	**paths)
 	{
 		path = path_join(paths[i], cmd, '/');
 		if (!path)
-			return (ft_putstr_fd("something's wrong i can feel it\n", 2), NULL);
+			return (NULL);
 		if (access(path, X_OK) == 0)
 			return (path);
 		free(path);

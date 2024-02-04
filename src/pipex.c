@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 16:27:46 by ozahir            #+#    #+#             */
-/*   Updated: 2022/03/10 22:00:36 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/03/17 18:28:02 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	exec_this(int *pipes, int *pip, char	*cmd, char	**envp)
 	cnd = ft_split(cmd, ' ');
 	if (!cnd)
 	{
-		ft_putstr_fd("error in ft_split", 2);
+		ft_putstr_fd("error in split", 2);
 		exit(1);
 	}
 	path = get_path(cnd[0], envp);
@@ -110,25 +110,4 @@ void	pipex(int *pipes, int argc, char **argv, char **envp)
 		k += 2;
 		i++;
 	}
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	int	*pipes;
-	int	i;
-
-	i = 0;
-	if (argc >= 5)
-	{
-		pipes = step_one(argc, argv);
-		if (!pipes)
-			return (0);
-		check_fd(pipes);
-		pipex(pipes, argc, argv, envp);
-		wait(NULL);
-		if (ft_strncmp(argv[1], "here_doc", 8) == 0)
-			unlink(".tmp");
-	}
-	else
-		ft_putstr_fd("Usage: ./pipex file cmd1 cmd2 .. cmd'n file-out", 1);
 }
